@@ -33,14 +33,13 @@ public interface ApiInterface {
             );
 
     @FormUrlEncoded
-    @POST("Meet.php")
+    @POST("Absen/add")
     Call<ResponseData> absenData(
-            @Field("npp") String npp,
-            @Field("nama") String nama,
-            @Field("batch") String batch,
-            @Field("page") String page,
-            @Field("password") String password,
-            @Field("pilih") String pilih
+            @Field("id_jadwal") String id_jadwal,
+            @Field("id_qr") String id_qr,
+            @Field("id_siswa") String id_siswa,
+            @Field("long_gps") double long_gps,
+            @Field("lang_gps") double lang_gps
             );
 
 

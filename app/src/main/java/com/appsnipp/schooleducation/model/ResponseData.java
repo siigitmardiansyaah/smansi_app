@@ -8,6 +8,10 @@ import java.util.List;
 public class ResponseData {
     private List<MapelData> matkul;
     private List<AbsenData> absen;
+    @SerializedName("message")
+    private String message;
+    @SerializedName("status")
+    private boolean status;
 
     public List<MapelData> getMatkul() {
         return matkul;
@@ -23,5 +27,21 @@ public class ResponseData {
 
     public void setAbsen(List<AbsenData> absen) {
         this.absen = absen;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 }
