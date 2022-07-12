@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -33,8 +34,10 @@ public class Absensi extends AppCompatActivity {
     private List<AbsenData> listData = new ArrayList<>();
     private SwipeRefreshLayout srlData;
     private ProgressBar pbData;
-    private String id_siswa = "1";
+    private String id_siswa;
     private String id_mapel;
+    SessionManager sessionManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,10 @@ public class Absensi extends AppCompatActivity {
         pbData = findViewById(R.id.pb_data);
         lmData = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rvData.setLayoutManager(lmData);
+        sessionManager = new SessionManager(Absensi.this);
+        if (!sessionManager.isLoggedIn()) {
+            moveToLogin();
+        }
 
         srlData.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -66,6 +73,7 @@ public class Absensi extends AppCompatActivity {
         pbData.setVisibility(View.VISIBLE);
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
         id_mapel = getIntent().getStringExtra("id_mapel");
+        id_siswa = sessionManager.getUserDetail().get(SessionManager.ID_SISWA);
 
         Call<ResponseData> tampilData = apiInterface.absenResponse(id_siswa, id_mapel);
 
@@ -86,6 +94,16 @@ public class Absensi extends AppCompatActivity {
                 pbData.setVisibility(View.INVISIBLE);
             }
         });
+    }
+    @Override
+    public void onPause() {
+        super.onPause();  // Always call the superclass method first
+    }
+    private void moveToLogin() {
+        Intent intent = new Intent(Absensi.this, Login.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
+        startActivity(intent);
+        finish();
     }
 }
 

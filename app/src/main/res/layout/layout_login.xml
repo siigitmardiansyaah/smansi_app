@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginBottom="8dp"
+    android:layout_marginEnd="24dp"
+    android:layout_marginStart="24dp"
+    android:layout_marginTop="8dp"
+    android:orientation="vertical"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/loginHeader"
+        android:text="Login"
+        android:layout_marginTop="@dimen/loginViewsMargin"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputEmail"
+        style="@style/parent"
+        android:layout_marginTop="@dimen/loginViewsMargin">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextEmail"
+            style="@style/modifiedEditText"
+            android:hint="NIS"
+            android:inputType="textEmailAddress"
+            android:maxLines="1" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputPassword"
+        style="@style/parent"
+        android:layout_marginTop="@dimen/loginViewsMargin">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextPassword"
+            style="@style/modifiedEditText"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:maxLines="1" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/cirLoginButton"
+        style="@style/loginButton"
+        android:layout_gravity="right"
+        android:layout_marginTop="@dimen/loginViewsMargin"
+        android:text="Login" />
+
+    <TextView
+        android:id="@+id/txt_regis"
+        style="@style/parent"
+        android:textAlignment="textEnd"
+        android:textStyle="bold"
+        android:textColor="@color/primaryTextColor1"
+        android:text="Belum Punya Akun ? Silahkan Register disini"
+        android:layout_marginTop="@dimen/loginViewsMargin"/>
+
+</LinearLayout>

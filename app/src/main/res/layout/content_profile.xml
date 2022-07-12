@@ -24,12 +24,12 @@
         <RelativeLayout style="@style/profileDetailsLayout">
             <ImageView
                 android:id="@+id/nameImageView"
-                android:src="@drawable/ic_name"
+                android:src="@drawable/man"
                 style="@style/profileDetailsImage" />
 
             <TextView
                 android:id="@+id/nameTextView"
-                android:text="Name"
+                android:text="Nama"
                 android:layout_toRightOf="@id/nameImageView"
                 style="@style/profileDetailsTextMain" />
 
@@ -56,16 +56,18 @@
         <RelativeLayout style="@style/profileDetailsLayout">
             <ImageView
                 android:id="@+id/mobileImageView"
-                android:src="@drawable/ic_mobile"
+                android:src="@drawable/nis"
                 style="@style/profileDetailsImage" />
 
             <TextView
+                android:id="@+id/txt_nis"
                 android:text="NIS"
                 android:layout_toRightOf="@id/mobileImageView"
                 style="@style/profileDetailsTextMain"/>
 
             <TextView
-                android:text="xxxxx"
+                android:id="@+id/nis"
+                android:text="NIS"
                 android:layout_toRightOf="@id/mobileImageView"
                 style="@style/profileDetailsMiniText" />
 
@@ -75,7 +77,7 @@
         <RelativeLayout style="@style/profileDetailsLayout">
             <ImageView
                 android:id="@+id/emailImageView"
-                android:src="@drawable/ic_email"
+                android:src="@drawable/padlock"
                 style="@style/profileDetailsImage" />
 
             <TextView
@@ -96,7 +98,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:hint="Password"
-                android:inputType="text"
+                android:inputType="textPassword"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -110,7 +112,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Update Profile"
-            android:background="@color/blue_btn_bg_color"/>
+            android:background="@color/red_btn_bg_color"/>
 
     </LinearLayout>
 

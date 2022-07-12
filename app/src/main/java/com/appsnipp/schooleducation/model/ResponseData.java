@@ -12,6 +12,8 @@ public class ResponseData {
     private String message;
     @SerializedName("status")
     private boolean status;
+    @SerializedName("login")
+    private LoginData login;
 
     public List<MapelData> getMatkul() {
         return matkul;
@@ -43,5 +45,13 @@ public class ResponseData {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    public LoginData getLogin() {
+        return login;
+    }
+
+    public void setLogin(LoginData login) {
+        this.login = login;
     }
 }

@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -31,7 +32,9 @@ public class Mapel extends AppCompatActivity {
     private List<MapelData> listData = new ArrayList<>();
     private SwipeRefreshLayout srlData;
     private ProgressBar pbData;
-    private String id_siswa = "1";
+    private String id_siswa;
+    SessionManager sessionManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +44,10 @@ public class Mapel extends AppCompatActivity {
         pbData = findViewById(R.id.pb_data);
         lmData = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rvData.setLayoutManager(lmData);
+        sessionManager = new SessionManager(Mapel.this);
+        if (!sessionManager.isLoggedIn()) {
+            moveToLogin();
+        }
 
         srlData.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -58,8 +65,21 @@ public class Mapel extends AppCompatActivity {
         retrieveData();
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();  // Always call the superclass method first
+    }
+
+    private void moveToLogin() {
+        Intent intent = new Intent(Mapel.this, Login.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
+        startActivity(intent);
+        finish();
+    }
+
     public void retrieveData() {
         pbData.setVisibility(View.VISIBLE);
+        id_siswa = sessionManager.getUserDetail().get(SessionManager.ID_SISWA);
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
         Call<ResponseData> tampilData = apiInterface.matkulResponse(id_siswa);
 
@@ -81,5 +101,7 @@ public class Mapel extends AppCompatActivity {
             }
         });
     }
+
+
 
 }

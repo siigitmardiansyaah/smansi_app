@@ -42,5 +42,21 @@ public interface ApiInterface {
             @Field("lang_gps") double lang_gps
             );
 
+    @FormUrlEncoded
+    @POST("Login")
+    Call<ResponseData> loginResponse(
+            @Field("nis") String nis,
+            @Field("password") String password,
+            @Field("device_id") String device_id
+    );
+
+    @FormUrlEncoded
+    @POST("Register")
+    Call<ResponseData> regisResponse(
+            @Field("nis") String nis,
+            @Field("password") String password,
+            @Field("device_id") String device_id
+    );
+
 
 }

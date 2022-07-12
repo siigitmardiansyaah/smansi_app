@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,8 +22,6 @@ public class AdapterMapel extends RecyclerView.Adapter<AdapterMapel.HolderData> 
     private Context ctx;
     private List<MapelData> listData;
     String id_mapel1;
-
-
 
     public AdapterMapel(Context ctx, List<MapelData> listData) {
         this.ctx = ctx;

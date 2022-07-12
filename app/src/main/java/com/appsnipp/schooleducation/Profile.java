@@ -17,7 +17,7 @@ import com.appsnipp.schooleducation.api.ApiClient;
 import com.appsnipp.schooleducation.api.ApiInterface;
 import com.appsnipp.schooleducation.model.ResponseData;
 
-import cn.pedant.SweetAlert.SweetAlertDialog ;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -26,6 +26,8 @@ public class Profile extends AppCompatActivity {
     private Context context;
     ApiInterface apiInterface;
     EditText txt_nama, txt_password;
+    SessionManager sessionManager;
+    TextView txt_nis;
 
 
     @Override
@@ -36,7 +38,14 @@ public class Profile extends AppCompatActivity {
         Button btn_update = findViewById(R.id.update_btn);
         txt_nama = findViewById(R.id.txt_nama);
         txt_password = findViewById(R.id.txt_password);
+        txt_nis = findViewById(R.id.txt_nis);
         context = this;
+        sessionManager = new SessionManager(Profile.this);
+        if (!sessionManager.isLoggedIn()) {
+            moveToLogin();
+        }
+        txt_nama.setText(sessionManager.getUserDetail().get(SessionManager.NAMA));
+        txt_nis.setText(sessionManager.getUserDetail().get(SessionManager.NIS));
         back_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -47,35 +56,51 @@ public class Profile extends AppCompatActivity {
         btn_update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String id_siswa = "1";
+                String id_siswa = sessionManager.getUserDetail().get(SessionManager.ID_SISWA);
                 String nama = txt_nama.getText().toString();
                 String password = txt_password.getText().toString();
-                new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE).setTitleText("Apakah anda yakin ingin update ?").setContentText("Data terbaru akan muncul setelah anda logout").setConfirmText("Iya").showCancelButton(true).setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {@Override
-                public void onClick(SweetAlertDialog sDialog) {
-                    apiInterface = ApiClient.getClient().create(ApiInterface.class);
-                    Call<ResponseData> sendbio = apiInterface.profileResponse(id_siswa,nama,password);
-                    sendbio.enqueue(new Callback<ResponseData>() {
-                        @Override
-                        public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
-                            if(response.isSuccessful())
-                            {
-                                sDialog.setTitleText("Profile Diupdate").setContentText("Profile anda berhasil diupdate").setConfirmText("OK").setConfirmClickListener(null).changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
-                            }else
-                            {
-                                sDialog.setTitleText("Gagal Diupdate").setContentText("Profile anda gagal berhasil diupdate").setConfirmText("OK").setConfirmClickListener(null).changeAlertType(SweetAlertDialog.WARNING_TYPE);
+                new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE).setTitleText("Apakah anda yakin ingin update ?").setContentText("Data terbaru akan muncul setelah anda logout").setConfirmText("Iya").showCancelButton(false).setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+                        Call<ResponseData> sendbio = apiInterface.profileResponse(id_siswa, nama, password);
+                        sendbio.enqueue(new Callback<ResponseData>() {
+                            @Override
+                            public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
+                                if (response.isSuccessful()) {
+                                    sDialog.setTitleText("Profile Diupdate").setContentText("Profile anda berhasil diupdate").setConfirmText("OK").setConfirmClickListener(null).changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
+                                } else {
+                                    sDialog.setTitleText("Gagal Diupdate").setContentText("Profile anda gagal berhasil diupdate").setConfirmText("OK").setConfirmClickListener(null).changeAlertType(SweetAlertDialog.WARNING_TYPE);
+                                }
                             }
-                        }
 
-                        @Override
-                        public void onFailure(Call<ResponseData> call, Throwable t) {
-                            Log.d("RETRO", "Falure : " + "Gagal Mengirim Request");
-                        }
-                    });
-                }
+                            @Override
+                            public void onFailure(Call<ResponseData> call, Throwable t) {
+                                Log.d("RETRO", "Falure : " + "Gagal Mengirim Request");
+                            }
+                        });
+                    }
                 }).show();
             }
         });
 
 
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();  // Always call the superclass method first
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();  // Always call the superclass method first
+    }
+
+    private void moveToLogin() {
+        Intent intent = new Intent(Profile.this, Login.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
+        startActivity(intent);
+        finish();
     }
 }

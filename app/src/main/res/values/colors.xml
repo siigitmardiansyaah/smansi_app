@@ -36,4 +36,13 @@
     <color name="gradientLightBlue">#376DF6</color>
     <color name="gradientLightGreen">#21E8AC</color>
 
+    <!--colors for modern ui-->
+    <color name="whiteTextColor1">#fff</color>
+    <color name="primaryTextColor1">#2661FA</color>
+    <color name="loginBkColor">#f0f0f0</color>
+
+    <!--colros for card-->
+    <color name="whiteCardColor">#fff</color>
+    <color name="putih">#FFFFFF</color>
+
 </resources>
