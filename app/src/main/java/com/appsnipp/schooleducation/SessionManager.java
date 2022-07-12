@@ -21,6 +21,8 @@ public class SessionManager {
     public static final String ID_KELAS = "id_kelas";
     public static final String DEVICE_ID = "device_id";
     public static final String NIS = "nis";
+    public static final String NAMA_KELAS = "nama_kelas";
+
 
 
     public SessionManager(Context context){
@@ -36,6 +38,7 @@ public class SessionManager {
         editor.putString(ID_KELAS, user.getId_kelas());
         editor.putString(DEVICE_ID, user.getDevice_id());
         editor.putString(NIS, user.getNis());
+        editor.putString(NAMA_KELAS, user.getNama_kelas());
         editor.commit();
     }
 
@@ -46,6 +49,7 @@ public class SessionManager {
         user.put(ID_KELAS, sharedPreferences.getString(ID_KELAS,null));
         user.put(DEVICE_ID, sharedPreferences.getString(DEVICE_ID,null));
         user.put(NIS, sharedPreferences.getString(NIS,null));
+        user.put(NAMA_KELAS, sharedPreferences.getString(NAMA_KELAS,null));
         return user;
     }
 

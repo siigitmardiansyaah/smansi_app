@@ -56,7 +56,7 @@ public class Login extends AppCompatActivity {
                 loginCall.enqueue(new Callback<ResponseData>() {
                     @Override
                     public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
-                        if(response.body() != null && response.isSuccessful() && response.body().isStatus()){
+                        if(response.isSuccessful() && response.body().isError() == false){
 
                             // Ini untuk menyimpan sesi
                             sessionManager = new SessionManager(Login.this);
@@ -64,12 +64,11 @@ public class Login extends AppCompatActivity {
                             sessionManager.createLoginSession(loginData);
 
                             //Ini untuk pindah
-                            Toast.makeText(Login.this,"Selamat Datang " + response.body().getLogin().getNama(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Login.this,"Selamat Datang " + response.body().getLogin().getNama(), Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(Login.this, MainActivity.class);
                             startActivity(intent);
-                            finish();
                         } else {
-                            Toast.makeText(Login.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Login.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
                         }
                     }
                     @Override

@@ -18,12 +18,14 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/txt_namauser"
                 android:text="Yongki Herdiansah"
                 style="@style/viewParent.headerText" />
 
             <TextView
+                android:id="@+id/hiyaaaa"
                 android:text="Kelas : IV"
-                style="@style/viewParent.headerText.contentText"
+                style="@style/viewParent.headerText1"
                 android:layout_marginBottom="30dp"/>
 
 

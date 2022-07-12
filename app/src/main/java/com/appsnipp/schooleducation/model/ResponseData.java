@@ -10,8 +10,8 @@ public class ResponseData {
     private List<AbsenData> absen;
     @SerializedName("message")
     private String message;
-    @SerializedName("status")
-    private boolean status;
+    @SerializedName("error")
+    private boolean error;
     @SerializedName("login")
     private LoginData login;
 
@@ -39,12 +39,12 @@ public class ResponseData {
         this.message = message;
     }
 
-    public boolean isStatus() {
-        return status;
+    public boolean isError() {
+        return error;
     }
 
-    public void setStatus(boolean status) {
-        this.status = status;
+    public void setError(boolean error) {
+        this.error = error;
     }
 
     public LoginData getLogin() {

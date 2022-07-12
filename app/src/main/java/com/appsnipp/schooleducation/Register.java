@@ -54,15 +54,13 @@ public class Register extends AppCompatActivity {
                 loginCall.enqueue(new Callback<ResponseData>() {
                     @Override
                     public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
-                        if(response.body() != null && response.isSuccessful() && response.body().isStatus()){
-
+                        if(response.isSuccessful() && response.body().isError() == false){
                             //Ini untuk pindah
-                            Toast.makeText(Register.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Register.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(Register.this, Login.class);
                             startActivity(intent);
-                            finish();
                         } else {
-                            Toast.makeText(Register.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Register.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
                         }
                     }
                     @Override

@@ -21,7 +21,7 @@ import java.util.List;
 public class AdapterMapel extends RecyclerView.Adapter<AdapterMapel.HolderData> {
     private Context ctx;
     private List<MapelData> listData;
-    String id_mapel1;
+    String id_mapel1,hari,jam,hari_indo;
 
     public AdapterMapel(Context ctx, List<MapelData> listData) {
         this.ctx = ctx;
@@ -41,7 +41,30 @@ public class AdapterMapel extends RecyclerView.Adapter<AdapterMapel.HolderData> 
     public void onBindViewHolder(@NonNull HolderData holder, int position) {
         MapelData dm = listData.get(position);
         holder.mapel.setText(dm.getNama_mapel());
-        holder.kelas.setText(dm.getNama_kelas() + " - " + dm.getWaktu() );
+        String[] kata = dm.getWaktu().split(",");
+        hari = kata[0];
+        jam = kata[1];
+        if(hari.equals("Monday"))
+        {
+            hari_indo = "Senin";
+        }else if(hari.equals("Tuesday"))
+        {
+            hari_indo = "Selasa";
+        }else if(hari.equals("Wednesday"))
+        {
+            hari_indo = "Rabu";
+        }else if(hari.equals("Thursday"))
+        {
+            hari_indo = "Kamis";
+        }else if(hari.equals("Friday"))
+        {
+            hari_indo = "Jumat";
+        }else if(hari.equals("Saturday")){
+            hari_indo = "Sabtu";
+        }else{
+            hari_indo = "Minggu";
+        }
+        holder.kelas.setText(dm.getNama_guru() + " - " + hari_indo + " , " + jam + " - "+dm.getNama_kelas());
         holder.id_mapel.setText(dm.getId_mapel());
     }
 

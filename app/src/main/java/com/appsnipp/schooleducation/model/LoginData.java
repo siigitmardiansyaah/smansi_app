@@ -19,6 +19,10 @@ public class LoginData {
     @SerializedName("nis")
     private String nis;
 
+    @SerializedName("nama_kelas")
+    private String nama_kelas;
+
+
     public String getId_siswa() {
         return id_siswa;
     }
@@ -57,5 +61,13 @@ public class LoginData {
 
     public void setNis(String nis) {
         this.nis = nis;
+    }
+
+    public String getNama_kelas() {
+        return nama_kelas;
+    }
+
+    public void setNama_kelas(String nama_kelas) {
+        this.nama_kelas = nama_kelas;
     }
 }

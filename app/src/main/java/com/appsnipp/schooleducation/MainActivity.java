@@ -17,6 +17,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.cardview.widget.CardView;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.app.AppCompatDelegate;
 
@@ -35,6 +36,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -44,13 +46,15 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    double long_gps, lang_gps;
-    String id_siswa, id_jadwal, hasil, id_qr;
+    double long_gps;
+    double lang_gps;
+    String id_siswa, id_jadwal, hasil, id_qr,id_mapel,hiya1,hiya2;
     String[] kata;
     GpsTracker gpsTracker;
     ApiInterface apiInterface;
     private Context context;
     SessionManager sessionManager;
+    TextView txt_namauser,txt_kelas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +68,14 @@ public class MainActivity extends AppCompatActivity {
         CardView cardViewMapel = findViewById(R.id.mapel);
         CardView cardViewProfile = findViewById(R.id.profile);
         CardView cardViewLogout = findViewById(R.id.logout);
+        txt_namauser = findViewById(R.id.txt_namauser);
+        txt_kelas = findViewById(R.id.hiyaaaa);
         context = this;
+
+        txt_namauser.setText(sessionManager.getUserDetail().get(SessionManager.NAMA));
+        txt_kelas.setText("Kelas : " + sessionManager.getUserDetail().get(SessionManager.NAMA_KELAS));
+
+
 
         cardViewScan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,12 +126,19 @@ public class MainActivity extends AppCompatActivity {
                         Toast.LENGTH_LONG).show();
             } else {
                 id_siswa = sessionManager.getUserDetail().get(SessionManager.ID_SISWA);
-                long_gps = gpsTracker.getLongitude();
-                lang_gps = gpsTracker.getLatitude();
+                gpsTracker = new GpsTracker(MainActivity.this);
+                if(gpsTracker.canGetLocation()){
+                    lang_gps = gpsTracker.getLatitude();
+                    long_gps = gpsTracker.getLongitude();
+                }else{
+                    gpsTracker.showSettingsAlert();
+                }
                 hasil = result.getContents();
                 String[] kata = hasil.split("-");
                 id_jadwal = kata[0];
                 id_qr = kata[1];
+                id_mapel = kata[5];
+
                 new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE).setTitleText("Apakah Anda Yakin Ingin Absen ?").setContentText("Pastikan Mata Pelajarannya sudah sesuai").setConfirmText("Iya").showCancelButton(false).setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                     @Override
                     public void onClick(SweetAlertDialog sDialog) {
@@ -129,12 +147,13 @@ public class MainActivity extends AppCompatActivity {
                         sendbio.enqueue(new Callback<ResponseData>() {
                             @Override
                             public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
-                                if (response.isSuccessful()) {
-                                    sDialog.setTitleText("Berhasil Absen").setContentText(response.body().getMessage()).setConfirmText("OK").setConfirmClickListener(null).changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
-                                    Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                                if (response.isSuccessful() && response.body().isError() == false) {
+                                    Toast.makeText(MainActivity.this,response.body().getMessage(), Toast.LENGTH_LONG).show();
+                                    Intent intent = new Intent(MainActivity.this, Absensi.class);
+                                    intent.putExtra("id_mapel",id_mapel);
                                     startActivity(intent);
                                 } else {
-                                    sDialog.setTitleText("Gagal Absen").setContentText(response.body().getMessage()).setConfirmText("OK").setConfirmClickListener(null).changeAlertType(SweetAlertDialog.WARNING_TYPE);
+//                                    Toast.makeText(MainActivity.this,response.body().getMessage(), Toast.LENGTH_LONG).show();
                                     Intent intent = new Intent(MainActivity.this, MainActivity.class);
                                     startActivity(intent);
                                 }
@@ -167,30 +186,21 @@ public class MainActivity extends AppCompatActivity {
     private void moveToLogin() {
         Intent intent = new Intent(MainActivity.this, Login.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
+        sessionManager.logoutSession();
         startActivity(intent);
         finish();
     }
 
     public void checkPermission() {
-        if (Build.VERSION.SDK_INT >= 23) {
-            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && checkSelfPermission(android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(MainActivity.this, "Lebih baik diizinkan dapat mengakses lokasi agar penggunaan aplikasi menjadi lebih baik", Toast.LENGTH_SHORT).show();
-            } else {
-                ActivityCompat.requestPermissions(this, new String[]{
-                        Manifest.permission.ACCESS_FINE_LOCATION,
-                        Manifest.permission.ACCESS_COARSE_LOCATION,}, 1);
+        try {
+            if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ) {
+                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 101);
             }
+        } catch (Exception e){
+            e.printStackTrace();
         }
     }
 
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(MainActivity.this, "Lebih baik diizinkan dapat mengakses lokasi agar penggunaan aplikasi menjadi lebih baik", Toast.LENGTH_SHORT).show();
-        } else {
-            checkPermission();
-        }
-    }
 
 }

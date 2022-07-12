@@ -2,7 +2,7 @@ package com.appsnipp.schooleducation.model;
 
 public class MapelData {
 
-    private String nama_mapel,nama_kelas,waktu,id_mapel;
+    private String nama_mapel,nama_kelas,waktu,id_mapel,nama_guru;
 
     public String getNama_mapel() {
         return nama_mapel;
@@ -34,5 +34,13 @@ public class MapelData {
 
     public void setId_mapel(String id_mapel) {
         this.id_mapel = id_mapel;
+    }
+
+    public String getNama_guru() {
+        return nama_guru;
+    }
+
+    public void setNama_guru(String nama_guru) {
+        this.nama_guru = nama_guru;
     }
 }

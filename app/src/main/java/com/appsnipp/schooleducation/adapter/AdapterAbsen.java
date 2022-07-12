@@ -20,7 +20,7 @@ import java.util.List;
 public class AdapterAbsen extends RecyclerView.Adapter<AdapterAbsen.HolderData> {
     private Context ctx;
     private List<AbsenData> listData;
-
+    String hari,hari_indo,jam;
 
 
     public AdapterAbsen(Context ctx, List<AbsenData> listData) {
@@ -41,7 +41,30 @@ public class AdapterAbsen extends RecyclerView.Adapter<AdapterAbsen.HolderData> 
     public void onBindViewHolder(@NonNull HolderData holder, int position) {
         AbsenData dm = listData.get(position);
         holder.keterangan.setText(dm.getKeterangan());
-        holder.jam_absen.setText(dm.getWaktu_absen());
+        String[] kata = dm.getWaktu_absen().split(",");
+        hari = kata[0];
+        jam = kata[1];
+        if(hari.equals("Monday"))
+        {
+            hari_indo = "Senin";
+        }else if(hari.equals("Tuesday"))
+        {
+            hari_indo = "Selasa";
+        }else if(hari.equals("Wednesday"))
+        {
+            hari_indo = "Rabu";
+        }else if(hari.equals("Thursday"))
+        {
+            hari_indo = "Kamis";
+        }else if(hari.equals("Friday"))
+        {
+            hari_indo = "Jumat";
+        }else if(hari.equals("Saturday")){
+            hari_indo = "Sabtu";
+        }else{
+            hari_indo = "Minggu";
+        }
+        holder.jam_absen.setText(hari_indo + " , " + jam);
         if(holder.keterangan.getText().toString().equals("Hadir"))
         {
             holder.gambar.setImageResource(R.drawable.hadir);

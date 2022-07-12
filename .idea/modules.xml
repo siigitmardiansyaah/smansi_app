@@ -2,11 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/schooleducation.iml" filepath="$PROJECT_DIR$/schooleducation.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/schooleducation.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/schooleducation.app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/schooleducation.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/schooleducation.app.androidTest.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/schooleducation.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/schooleducation.app.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/schooleducation.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/schooleducation.app.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/smansi_app.iml" filepath="$PROJECT_DIR$/.idea/modules/smansi_app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/smansi_app.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/smansi_app.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/smansi_app.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/smansi_app.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/smansi_app.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/smansi_app.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/smansi_app.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/smansi_app.app.unitTest.iml" />
     </modules>
   </component>
 </project>

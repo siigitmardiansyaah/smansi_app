@@ -30,6 +30,7 @@
                 <TextView
                     android:id="@+id/textViewSub1Title"
                     android:text="Mata Pelajaran"
+                    android:textSize="20dp"
                     style="@style/viewParent.headerText.HomeCardTitle" />
 
                 <TextView

@@ -100,6 +100,7 @@ public class Profile extends AppCompatActivity {
     private void moveToLogin() {
         Intent intent = new Intent(Profile.this, Login.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
+        sessionManager.logoutSession();
         startActivity(intent);
         finish();
     }
